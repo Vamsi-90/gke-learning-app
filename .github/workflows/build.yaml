@@ -1,0 +1,32 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: ${{ secrets.AKHILA_GCP_SA_KEY }}
+
+    - name: Configure Docker for Artifact Registry
+      run: gcloud auth configure-docker us-central1-docker.pkg.dev
+
+    - name: Build Docker image
+      run: |
+        docker build -t us-central1-docker.pkg.dev/gke-learning-2025/gke-repo/gke-learning-app:${{ github.sha }} .
+        docker tag us-central1-docker.pkg.dev/gke-learning-2025/gke-repo/gke-learning-app:${{ github.sha }} us-central1-docker.pkg.dev/gke-learning-2025/gke-repo/gke-learning-app:latest
+
+    - name: Push Docker image
+      run: |
+        docker push us-central1-docker.pkg.dev/gke-learning-2025/gke-repo/gke-learning-app:${{ github.sha }}
+        docker push us-central1-docker.pkg.dev/gke-learning-2025/gke-repo/gke-learning-app:latest
