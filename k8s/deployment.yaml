@@ -1,27 +1,27 @@
- apiVersion: apps/v1
-  kind: Deployment
-  metadata:
-    name: gke-learning-app
-  spec:
-    replicas: 2
-    selector:
-      matchLabels:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gke-learning-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: gke-learning-app
+  template:
+    metadata:
+      labels:
         app: gke-learning-app
-    template:
-      metadata:
-        labels:
-          app: gke-learning-app
-      spec:
-        containers:
-        - name: gke-learning-app
-          image: us-central1-docker.pkg.dev/gke-learning-2025/gke-repo/gke-learning-app:latest
-          ports:
-          - containerPort: 8080
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 8080
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 8080
+    spec:
+      containers:
+      - name: gke-learning-app
+        image: us-central1-docker.pkg.dev/gke-learning-2025/gke-repo/gke-learning-app:latest
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080

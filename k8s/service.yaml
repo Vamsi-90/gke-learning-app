@@ -1,11 +1,11 @@
 apiVersion: v1
-  kind: Service
-  metadata:
-    name: gke-learning-app
-  spec:
-    type: LoadBalancer
-    selector:
-      app: gke-learning-app
-    ports:
-    - port: 80
-      targetPort: 8080
+kind: Service
+metadata:
+  name: gke-learning-app
+spec:
+  type: LoadBalancer
+  selector:
+    app: gke-learning-app
+  ports:
+  - port: 80
+    targetPort: 8080
