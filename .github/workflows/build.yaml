@@ -8,12 +8,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.AKHILA_GCP_SA_KEY }}
 
     - name: Authenticate to Google Cloud
       uses: google-github-actions/auth@v2
@@ -41,6 +41,7 @@ jobs:
       run: |
         git config user.email "github-actions@github.com"
         git config user.name "GitHub Actions"
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Vamsi-90/gke-learning-app.git
         git add k8s/deployment.yaml
         git commit -m "Update image tag to ${{ github.sha }}"
         git push
