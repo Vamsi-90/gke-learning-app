@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: gke-learning-app
-        image: us-central1-docker.pkg.dev/gke-learning-2025/gke-repo/gke-learning-app:latest
+        image: us-central1-docker.pkg.dev/gke-learning-2025/gke-repo/gke-learning-app:4b6bf785990e934447d17ca29ec8959b1f011bdf
         ports:
         - containerPort: 8080
         readinessProbe:
